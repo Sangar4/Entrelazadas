@@ -32,6 +32,7 @@ public class UpdateDialogFragment extends DialogFragment{
                 .setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
+
                     }
                 });
         // Create the AlertDialog object and return it
