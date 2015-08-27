@@ -21,21 +21,23 @@ public class LoadActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load);
         txtStatus  = (TextView) findViewById(R.id.progressStatus);
         progressStatus = (ProgressBar) findViewById(R.id.progressBar);
-
+        if(CheckCatalog()){
+            ShowUpdateDialog();
+        }
+        else
+            new UpdateCatalog(this).execute();
     }
     @Override
     protected void onStart() {
 
 
         super.onStart();
-       if(CheckCatalog()){
-        ShowUpdateDialog();
-       }
-        new UpdateCatalog().execute();
+
     }
 
      protected Boolean CheckCatalog () {
@@ -50,7 +52,8 @@ public class LoadActivity extends AppCompatActivity {
     protected void ShowUpdateDialog (){
         FragmentManager fm = getSupportFragmentManager();
         UpdateDialogFragment editNameDialog = new UpdateDialogFragment();
-       editNameDialog.show(fm,"Sample dialog");
+        editNameDialog.show(fm,"Sample dialog");
+
     }
 
 }
