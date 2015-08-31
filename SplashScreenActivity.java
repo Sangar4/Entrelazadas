@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-    public class SplashScreenActivity extends Activity {
+import java.util.List;
+
+public class SplashScreenActivity extends Activity {
 
         /** Duration of wait **/
         private final int SPLASH_DISPLAY_LENGTH = 2000;
@@ -31,6 +33,7 @@ import android.os.Handler;
                     SplashScreenActivity.this.finish();
                 }
             }, SPLASH_DISPLAY_LENGTH);
+
         }
     }
 

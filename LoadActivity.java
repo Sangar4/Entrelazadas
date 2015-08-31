@@ -3,6 +3,7 @@ package es.aplicaciones.alvaro.entrelazadas;
 
 
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,6 +29,7 @@ public class LoadActivity extends AppCompatActivity {
         progressStatus = (ProgressBar) findViewById(R.id.progressBar);
         if(CheckCatalog()){
             ShowUpdateDialog();
+
         }
         else
             new UpdateCatalog(this).execute();
@@ -53,6 +55,10 @@ public class LoadActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         UpdateDialogFragment editNameDialog = new UpdateDialogFragment();
         editNameDialog.show(fm,"Sample dialog");
+
+    }
+
+    protected static void GetImages(){
 
     }
 

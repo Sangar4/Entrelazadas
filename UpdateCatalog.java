@@ -26,13 +26,16 @@ import java.net.URL;
 
 
 public class UpdateCatalog extends AsyncTask <Void,Integer,Void> {
-    String dwnload_file_path = "http://servidoralvaro.ddns.net/images/Catalogo.xml";
+    String dwnload_file_path = "http://servidoralvaro.ddns.net/files/Catalogo.xml";
     String exception, urlStatusMessage;
-    private Context mContext;
 
+    private Context context;
+    private Activity activity;
 
-    public UpdateCatalog(Context context) {
-            mContext = context;
+    public UpdateCatalog(Activity activity) {
+        super();
+        this.activity = activity;
+        this.context = this.activity.getApplicationContext();
     }
 
     public int HttpCtatusCode;
@@ -129,8 +132,17 @@ public class UpdateCatalog extends AsyncTask <Void,Integer,Void> {
     protected void onPostExecute(final Void result) {
         // Update your views here
         LoadActivity.progressStatus.setVisibility(View.GONE);
-        Intent intent = new Intent(mContext, DownloadImages.class);
-        mContext.startActivity(intent);
+
+
+        //Esta línea la borraré, ahora la dejo para saber que en su momento la probé.
+        //context.startActivity(new Intent(context, DownloadImages.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+
+
+        //Quizá no sea necesario abrir la nueva actividad aun porque hemos de descargar las imagenes primero y generar la list con los objetos.
+        //Intent intent = new Intent(activity.getApplicationContext(), DownloadImages.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); La borraré por ahoira la dejo
+        //activity.startActivity(intent);
     }
 }
 

@@ -2,9 +2,11 @@ package es.aplicaciones.alvaro.entrelazadas;
 
 
 import android.app.Dialog;
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -14,9 +16,10 @@ import android.support.v7.app.AlertDialog;
  */
 public class UpdateDialogFragment extends DialogFragment{
     Context context;
+    Activity activity;
+   public UpdateDialogFragment (){
 
-    public UpdateDialogFragment (){
-        this.context = context.getApplicationContext();
+       //this.context = this.activity.getApplicationContext();
     }
     @Override
 
@@ -26,13 +29,15 @@ public class UpdateDialogFragment extends DialogFragment{
         builder.setMessage(R.string.download_question)
                 .setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        new UpdateCatalog(context).execute();
+                        new UpdateCatalog(getActivity()).execute();
                     }
                 })
                 .setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
-
+                        Intent intent = new Intent(getActivity(), DownloadImages.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     }
                 });
         // Create the AlertDialog object and return it
