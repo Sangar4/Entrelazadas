@@ -1,8 +1,10 @@
 package es.aplicaciones.alvaro.entrelazadas;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.view.View;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,10 +20,26 @@ import java.net.URL;
 public class DownloadImages extends AsyncTask <Void,Integer,Void> {
     int HttpCtatusCode;
     String exception, urlStatusMessage;
+    String dwnload_file_path,fileName, rootFilePath;
+
+    public DownloadImages(Producto object , int count) {
+        super();
+        dwnload_file_path = object.getImage1();
+        if(count >0) {
+            fileName = object.getReferencia() + count + ".jpg";
+        }
+        else{
+            fileName = object.getReferencia()+".jpg";
+        }
+
+        rootFilePath      = "/Entrelazadas/Images/"+object.getFamilia()+"/"+object.getSubFamilia();
+        if (object.getCategoria().equals("NULL")){}
+        else
+            rootFilePath  =  rootFilePath +"/"+object.getCategoria();
+    }
 
     protected Void doInBackground(Void... x) {
-        String dwnload_file_path = "http://servidoralvaro.ddns.net/files/Catalogo.xml";
-        String urlStatusMessage;
+
 
         try {
             URL url = new URL(dwnload_file_path);
@@ -37,10 +55,10 @@ public class DownloadImages extends AsyncTask <Void,Integer,Void> {
 
                 //set the path where we want to save the file
                 String root = Environment.getExternalStorageDirectory().toString();
-                File SDCardRoot = new File(root + "/Entrelazadas/Images");
+                File SDCardRoot = new File(root + rootFilePath);
                 SDCardRoot.mkdirs();
                 //create a new file, to save the downloaded file
-                File file = new File(SDCardRoot, "El nombre de la imagen.jpg");
+                File file = new File(SDCardRoot, fileName);
 
                 FileOutputStream fileOutput = new FileOutputStream(file);
 
@@ -50,7 +68,7 @@ public class DownloadImages extends AsyncTask <Void,Integer,Void> {
                 byte[] buffer = new byte[4 * 1024];
                 int bufferLength = 0;
 
-                while ((bufferLength = inputStream.read(buffer)) < 0) {
+                while ((bufferLength = inputStream.read(buffer)) != -1) {
                     fileOutput.write(buffer, 0, bufferLength);
                     publishProgress(0);
                 }
@@ -80,10 +98,12 @@ public class DownloadImages extends AsyncTask <Void,Integer,Void> {
         for (int i = 0; i < option.length; i++) {
             switch (option[i]) {
                 case 0:
-                    LoadActivity.txtStatus.setText(R.string.downloading);
+                    LoadActivity.txtStatus.setText(R.string.downloadingImages);
+                    LoadActivity.txtStatus.setTextColor((Color.rgb(255, 255, 255)));
                     break;
                 case 1:
-                    LoadActivity.txtStatus.setText(R.string.complet);
+                    LoadActivity.txtStatus.setText(R.string.completImages);
+                    LoadActivity.txtStatus.setTextColor((Color.rgb(255, 255, 255)));
                     break;
                 case 2:
                     LoadActivity.txtStatus.setText(R.string.url_malformed + ":" + exception);
@@ -106,4 +126,9 @@ public class DownloadImages extends AsyncTask <Void,Integer,Void> {
             }
         }
     }
+    protected void onPostExecute(final Void result) {
+        // Update your views here
+        LoadActivity.progressStatus.setVisibility(View.GONE);
+    }
+
 }

@@ -67,10 +67,10 @@ public class UpdateCatalog extends AsyncTask <Void,Integer,Void> {
                //Stream used for reading the data from the internet
                InputStream inputStream = urlConnection.getInputStream();
                //create a buffer...
-               byte[] buffer = new byte[4 * 1024];
+               byte[] buffer = new byte[1024];
                int bufferLength = 0;
 
-               while ((bufferLength = inputStream.read(buffer)) < 0) {
+               while ((bufferLength = inputStream.read(buffer)) != -1) {
                    fileOutput.write(buffer, 0, bufferLength);
                    publishProgress(0);
                }
@@ -131,13 +131,14 @@ public class UpdateCatalog extends AsyncTask <Void,Integer,Void> {
     @Override
     protected void onPostExecute(final Void result) {
         // Update your views here
-        LoadActivity.progressStatus.setVisibility(View.GONE);
+        //LoadActivity.progressStatus.setVisibility(View.GONE);
 
 
         //Esta línea la borraré, ahora la dejo para saber que en su momento la probé.
         //context.startActivity(new Intent(context, DownloadImages.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
-
+        LoadActivity.GetImages(activity.getApplicationContext());
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); La borraré );
 
         //Quizá no sea necesario abrir la nueva actividad aun porque hemos de descargar las imagenes primero y generar la list con los objetos.
         //Intent intent = new Intent(activity.getApplicationContext(), DownloadImages.class);
@@ -145,7 +146,6 @@ public class UpdateCatalog extends AsyncTask <Void,Integer,Void> {
         //activity.startActivity(intent);
     }
 }
-
 
 
 

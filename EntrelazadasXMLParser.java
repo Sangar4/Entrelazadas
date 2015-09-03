@@ -1,12 +1,15 @@
 package es.aplicaciones.alvaro.entrelazadas;
 
+import android.content.Context;
 import android.util.Xml;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,35 +19,64 @@ import java.util.List;
 public class EntrelazadasXMLParser {
     // We don't use namespaces
     private static final String ns = null;
+    String Id = null;;
+    String Referencia = null;;
+    String Nombre = null;;
+    String Categoria = null;;
+    String SubFamilia = null;;
+    String Familia = null;;
+    String Descripcion = null;;
+    String Precio = null;;
+    String Image1 = null;
+    String Image2 = null;
+    String Image3 = null;
+    String Image4 = null;
+    String Image5 = null;
 
-    public List parse(InputStream in) throws XmlPullParserException, IOException {
+    public List parse(InputStream in, Context context) throws /*XmlPullParserException,*/ IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(in, null);
             parser.nextTag();
-            return readFeed(parser);
-        } finally {
+            return readFeed(parser,context);
+
+        }catch (XmlPullParserException e){
+
+            Toast.makeText(context, "Error en el parser: " + e.toString(),
+                    Toast.LENGTH_LONG).show();
+            return null;
+        }
+        finally {
             in.close();
         }
-    }
-    private List readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List entries = new ArrayList();
 
-        parser.require(XmlPullParser.START_TAG, ns, "pma_xml_export");
-        while (parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
-                continue;
+    }
+
+    private List readFeed(XmlPullParser parser, Context context) throws /*XmlPullParserException,*/ IOException {
+        List entries = new ArrayList();
+        try {
+            parser.require(XmlPullParser.START_TAG, ns, "database");
+            while (parser.next() != XmlPullParser.END_TAG) {
+                if (parser.getEventType() != XmlPullParser.START_TAG) {
+                    continue;
+                }
+                String name = parser.getName();
+                // Starts by looking for the table tag
+                if (name.equals("table")) {
+                    entries.add(readEntry(parser));
+                } else {
+                    skip(parser);
+                }
             }
-            String name = parser.getName();
-            // Starts by looking for the entry tag
-            if (name.equals("entry")) {
-                entries.add(readEntry(parser));
-            } else {
-                skip(parser);
-            }
+            return entries;
         }
-        return entries;
+        catch (XmlPullParserException e){
+
+            Toast.makeText(context, "Error en el read feed: " + e.toString(),
+                    Toast.LENGTH_LONG).show();
+            return null;
+        }
     }
 
     private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -83,28 +115,16 @@ public class EntrelazadasXMLParser {
 
             }
         }
-        return new Producto(Objeto);
+        return Objeto;
     }
 
     private Producto readColumn(XmlPullParser parser) throws IOException, XmlPullParserException {
-        Producto Objeto ;
-        String Id = null;;
-        String Referencia = null;;
-        String Nombre = null;;
-        String Categoria = null;;
-        String SubFamilia = null;;
-        String Familia = null;;
-        String Descripcion = null;;
-        String Precio = null;;
-        String Image1 = null;
-        String Image2 = null;
-        String Image3 = null;
-        String Image4 = null;
-        String Image5 = null;
+
+
         parser.require(XmlPullParser.START_TAG, ns, "column");
         String tag = parser.getName();
         String relType = parser.getAttributeValue(null, "name");
-
+        Producto Objeto;
             if (relType.equals("Id")){
                 Id = readId(parser);
             } else if(relType.equals("Precio")){
