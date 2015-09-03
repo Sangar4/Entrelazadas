@@ -99,7 +99,7 @@ public class LoadActivity extends AppCompatActivity {
 
         for(int x=0 ;x<entries.size() ; x++) {
 
-            if(x%20==0){
+            if(i%20==0){
                 Toast.makeText(context, "Se están descargando las imagenes, esta operación puede tardar unos minutos",
                         Toast.LENGTH_LONG).show();
             }
@@ -108,6 +108,7 @@ public class LoadActivity extends AppCompatActivity {
 
                 x--;
             }
+            i++;
         }
 
     }

@@ -99,11 +99,11 @@ public class DownloadImages extends AsyncTask <Void,Integer,Void> {
             switch (option[i]) {
                 case 0:
                     LoadActivity.txtStatus.setText(R.string.downloadingImages);
-                    LoadActivity.txtStatus.setTextColor((Color.rgb(255, 255, 255)));
+                   // LoadActivity.txtStatus.setTextColor((Color.rgb(255, 255, 255)));
                     break;
                 case 1:
                     LoadActivity.txtStatus.setText(R.string.completImages);
-                    LoadActivity.txtStatus.setTextColor((Color.rgb(255, 255, 255)));
+                   // LoadActivity.txtStatus.setTextColor((Color.rgb(255, 255, 255)));
                     break;
                 case 2:
                     LoadActivity.txtStatus.setText(R.string.url_malformed + ":" + exception);
@@ -128,7 +128,7 @@ public class DownloadImages extends AsyncTask <Void,Integer,Void> {
     }
     protected void onPostExecute(final Void result) {
         // Update your views here
-        LoadActivity.progressStatus.setVisibility(View.GONE);
+       // LoadActivity.progressStatus.setVisibility(View.GONE);
     }
 
 }
