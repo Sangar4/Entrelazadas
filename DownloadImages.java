@@ -1,6 +1,7 @@
 package es.aplicaciones.alvaro.entrelazadas;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -20,22 +21,24 @@ import java.net.URL;
 public class DownloadImages extends AsyncTask <Void,Integer,Void> {
     int HttpCtatusCode;
     String exception, urlStatusMessage;
-    String dwnload_file_path,fileName, rootFilePath;
+    String dwnload_file_path, fileName, rootFilePath;
+    boolean last;
 
-    public DownloadImages(Producto object , int count) {
+    public DownloadImages(Producto object, int count, boolean last) {
         super();
         dwnload_file_path = object.getImage1();
-        if(count >0) {
+        this.last = last;
+        if (count > 0) {
             fileName = object.getReferencia() + count + ".jpg";
-        }
-        else{
-            fileName = object.getReferencia()+".jpg";
+        } else {
+            fileName = object.getReferencia() + ".jpg";
         }
 
-        rootFilePath      = "/Entrelazadas/Images/"+object.getFamilia()+"/"+object.getSubFamilia();
-        if (object.getCategoria().equals("NULL")){}
-        else
-            rootFilePath  =  rootFilePath +"/"+object.getCategoria();
+        rootFilePath = "/Entrelazadas/Images/" + object.getFamilia() + "/" + object.getSubFamilia();
+        if (object.getCategoria().equals("NULL")) {
+        } else
+            rootFilePath = rootFilePath + "/" + object.getCategoria();
+
     }
 
     protected Void doInBackground(Void... x) {
@@ -99,11 +102,11 @@ public class DownloadImages extends AsyncTask <Void,Integer,Void> {
             switch (option[i]) {
                 case 0:
                     LoadActivity.txtStatus.setText(R.string.downloadingImages);
-                   // LoadActivity.txtStatus.setTextColor((Color.rgb(255, 255, 255)));
+                    // LoadActivity.txtStatus.setTextColor((Color.rgb(255, 255, 255)));
                     break;
                 case 1:
                     LoadActivity.txtStatus.setText(R.string.completImages);
-                   // LoadActivity.txtStatus.setTextColor((Color.rgb(255, 255, 255)));
+                    // LoadActivity.txtStatus.setTextColor((Color.rgb(255, 255, 255)));
                     break;
                 case 2:
                     LoadActivity.txtStatus.setText(R.string.url_malformed + ":" + exception);
@@ -126,9 +129,13 @@ public class DownloadImages extends AsyncTask <Void,Integer,Void> {
             }
         }
     }
+
     protected void onPostExecute(final Void result) {
         // Update your views here
-       // LoadActivity.progressStatus.setVisibility(View.GONE);
-    }
+        if (last) {
+          //  Intent intent = new Intent(, MainActivity.class);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
 
+    }
 }

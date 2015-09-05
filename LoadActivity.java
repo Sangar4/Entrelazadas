@@ -73,7 +73,7 @@ public class LoadActivity extends AppCompatActivity {
 
     }
 
-    protected static void GetImages(Context context) {
+    protected static void GetImages(Context context , boolean flag) {
 
         EntrelazadasXMLParser XmlParser = new EntrelazadasXMLParser();
         //List<Producto> entries =null;
@@ -82,6 +82,7 @@ public class LoadActivity extends AppCompatActivity {
         File file = new File (root,"catalogo.xml");
         int count=0, count1=0;
         int i=0;
+        boolean last=false;
         try {
 
             is = new BufferedInputStream(new FileInputStream(file));
@@ -99,57 +100,75 @@ public class LoadActivity extends AppCompatActivity {
 
         for(int x=0 ;x<entries.size() ; x++) {
 
-            if(i%20==0){
+            if((i%20)==0 && flag){
                 Toast.makeText(context, "Se están descargando las imagenes, esta operación puede tardar unos minutos",
                         Toast.LENGTH_LONG).show();
             }
-            count = CompareEntries((x), count1);
+            if(x==entries.size())
+                last=true;
+            count = CompareEntries((x), count1, flag, last);
             if (count != 0 && x != 0) {
 
                 x--;
             }
             i++;
         }
+        Toast.makeText(context,entries.get(4).getImage1() ,
+                Toast.LENGTH_LONG).show();
+        //context.startActivity(new Intent(context, prueba.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
     }
 
-    protected  static int CompareEntries (int x  , int count){
+    protected  static int CompareEntries (int x  , int count, boolean flag, boolean last){
 
         if(x>0){
-            if(entries.get(x-(1)).getId().equals(entries.get(x).getId())){
-                switch (count){
+            if(entries.get(x-(1)).getId().equals(entries.get(x).getId())) {
+                switch (count) {
                     case 0:
-                        entries.get(x-1).setImage2(entries.get(x).getImage1());
+                        entries.get(x - 1).setImage2(entries.get(x).getImage1());
                         count++;
-                        new DownloadImages(entries.get(x), count).execute();
+                        if (flag) {
+                            new DownloadImages(entries.get(x), count, last).execute();
+
+                        }
                         entries.remove(x);
 
-                            break;
+                        break;
 
                     case 1:
-                        entries.get(x-1).setImage3(entries.get(x).getImage1());
+                        entries.get(x - 1).setImage3(entries.get(x).getImage1());
                         count++;
-                        new DownloadImages(entries.get(x), count).execute();
+                        if (flag){
+                            new DownloadImages(entries.get(x), count, last).execute();
+
+                        }
                         entries.remove(x);
                         break;
 
                     case 2:
                         entries.get(x-1).setImage4(entries.get(x).getImage1());
                         count++;
-                        new DownloadImages(entries.get(x), count).execute();
+                        if(flag) {
+                            new DownloadImages(entries.get(x), count, last).execute();
+
+                        }
                         entries.remove(x);
                         break;
 
                     case 3:
                         entries.get(x-1).setImage5(entries.get(x).getImage1());
                         count++;
-                        new DownloadImages(entries.get(x), count).execute();
+                        if(flag) {
+                            new DownloadImages(entries.get(x), count, last).execute();
+
+                        }
                         entries.remove(x);
                         break;
 
                     case 4:
+                        /*
                         entries.get(x-1).setImage2(entries.get(x).getImage1());
-                            count++;
+                            count++;*/
                             break;
 
                     default: break;
@@ -158,10 +177,16 @@ public class LoadActivity extends AppCompatActivity {
             }
             else {
                 count = 0;
-                new DownloadImages(entries.get(x), 0).execute();
+                if(flag) {
+                    new DownloadImages(entries.get(x), 0,last).execute();
+
+                }
             }
 
-            new DownloadImages(entries.get(0), 0).execute();
+            if(flag) {
+                new DownloadImages(entries.get(0), 0, last).execute();
+
+            }
         }
 
         return count;

@@ -137,7 +137,7 @@ public class UpdateCatalog extends AsyncTask <Void,Integer,Void> {
         //Esta línea la borraré, ahora la dejo para saber que en su momento la probé.
         //context.startActivity(new Intent(context, DownloadImages.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
-        LoadActivity.GetImages(activity.getApplicationContext());
+        LoadActivity.GetImages(activity.getApplicationContext(), true);
         //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); La borraré );
 
         //Quizá no sea necesario abrir la nueva actividad aun porque hemos de descargar las imagenes primero y generar la list con los objetos.

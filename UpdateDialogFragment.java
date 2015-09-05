@@ -35,12 +35,12 @@ public class UpdateDialogFragment extends DialogFragment{
                 .setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
-                        LoadActivity.GetImages(getActivity().getApplicationContext());
+                        LoadActivity.GetImages(getActivity().getApplicationContext(), false);
 
                         //Esto no creo que lo necesite aquí.
-                        //Intent intent = new Intent(getActivity(), DownloadImages.class);
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        //startActivity(intent);
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     }
                 });
         // Create the AlertDialog object and return it
