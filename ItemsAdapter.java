@@ -39,7 +39,7 @@ public class ItemsAdapter extends BaseAdapter {
 
         name.setText(objects.get(position).getNombre());
         description.setText(objects.get(position).getDescripcion());
-        price.setText(objects.get(position).getPrecio());
+        price.setText(objects.get(position).getPrecio()+"euros");
         filePath="/Entrelazadas/Images/"+objects.get(position).getFamilia()+"/"+objects.get(position).getSubFamilia();
         if (objects.get(position).getCategoria().equals("NULL")){}
         else
@@ -47,7 +47,7 @@ public class ItemsAdapter extends BaseAdapter {
 
         filePath=Environment.getExternalStorageDirectory().toString()+filePath+"/"+objects.get(position).getReferencia()+".jpg";
         image.setImageURI(Uri.parse(filePath));
-       
+
         return convertView;
     }
 
