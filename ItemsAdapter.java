@@ -10,10 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import java.util.List;
 
 /**
- * Created by Álvaro on 05/09/2015.
+ * Created by ï¿½lvaro on 05/09/2015.
  */
 public class ItemsAdapter extends BaseAdapter {
     private LayoutInflater inflador; //Crea Layouts a partir del XML
@@ -46,8 +47,11 @@ public class ItemsAdapter extends BaseAdapter {
             filePath  =  filePath +"/"+objects.get(position).getCategoria();
 
         filePath=Environment.getExternalStorageDirectory().toString()+filePath+"/"+objects.get(position).getReferencia()+".jpg";
-        image.setImageURI(Uri.parse(filePath));
+        try {
+            image.setImageURI(Uri.parse(filePath));
+        }catch (Exception e){
 
+        }
         return convertView;
     }
 

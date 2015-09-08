@@ -69,7 +69,7 @@ public class LoadActivity extends AppCompatActivity {
     protected void ShowUpdateDialog (){
         FragmentManager fm = getSupportFragmentManager();
         UpdateDialogFragment editNameDialog = new UpdateDialogFragment();
-        editNameDialog.show(fm,"Sample dialog");
+        editNameDialog.show(fm, "Sample dialog");
 
     }
 
@@ -77,31 +77,20 @@ public class LoadActivity extends AppCompatActivity {
 
         EntrelazadasXMLParser XmlParser = new EntrelazadasXMLParser();
         //List<Producto> entries =null;
-        String root = Environment.getExternalStorageDirectory().toString()+ "/Entrelazadas";
+        String root = Environment.getExternalStorageDirectory().toString() + "/Entrelazadas";
         InputStream is;
-        File file = new File (root,"catalogo.xml");
-        int count=0, count1=0;
-        int i=0;
-        boolean last=false;
+        File file = new File(root, "catalogo.xml");
+        int count = 0, count1 = 0;
+        int i = 0;
+        boolean last = false;
         try {
 
             is = new BufferedInputStream(new FileInputStream(file));
-            entries = XmlParser.parse(is,context);
-
-        } catch (FileNotFoundException e){
-            Toast.makeText(context, "Fichero no encontrado: " +e.toString(),
-                    Toast.LENGTH_LONG).show();
-
-        } catch (IOException e){
-            Toast.makeText(context, "Error de IO: " +e.toString(),
-                    Toast.LENGTH_LONG).show();
-        }
-
-
-        for(int x=0 ;x<entries.size() ; x++) {
+            entries = XmlParser.parse(is, context);
+              for(int x=0 ;x<entries.size() ; x++) {
 
             if((i%20)==0 && flag){
-                Toast.makeText(context, "Se están descargando las imagenes, esta operación puede tardar unos minutos",
+                Toast.makeText(context, "Se estan descargando las imagenes, esta operacion puede tardar unos minutos",
                         Toast.LENGTH_LONG).show();
             }
             if(x==entries.size())
@@ -113,11 +102,20 @@ public class LoadActivity extends AppCompatActivity {
             }
             i++;
         }
-        Toast.makeText(context,entries.get(4).getImage1() ,
-                Toast.LENGTH_LONG).show();
-        //context.startActivity(new Intent(context, prueba.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 
+
+        } catch (FileNotFoundException e) {
+            Toast.makeText(context, "Fichero no encontrado: " + e.toString(),
+                    Toast.LENGTH_LONG).show();
+
+        } catch (IOException e) {
+            Toast.makeText(context, "Error de IO: " + e.toString(),
+                    Toast.LENGTH_LONG).show();
+        }
     }
+
+
+
 
     protected  static int CompareEntries (int x  , int count, boolean flag, boolean last){
 
@@ -190,5 +188,11 @@ public class LoadActivity extends AppCompatActivity {
         }
 
         return count;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+       // entries.clear();
     }
 }

@@ -38,7 +38,7 @@ public class UpdateDialogFragment extends DialogFragment{
                         LoadActivity.GetImages(getActivity().getApplicationContext(), false);
 
                         //Esto no creo que lo necesite aquí.
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        Intent intent = new Intent(getActivity(), FamilyActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }

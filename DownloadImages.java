@@ -1,6 +1,7 @@
 package es.aplicaciones.alvaro.entrelazadas;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -133,7 +134,7 @@ public class DownloadImages extends AsyncTask <Void,Integer,Void> {
     protected void onPostExecute(final Void result) {
         // Update your views here
         if (last) {
-          //  Intent intent = new Intent(, MainActivity.class);
+            //Intent intent = new Intent(, MainActivity.class);
             //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
 

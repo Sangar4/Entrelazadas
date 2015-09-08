@@ -4,12 +4,7 @@ package es.aplicaciones.alvaro.entrelazadas;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -19,13 +14,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ImageView image1, image2;
-    List<Producto> entries_search = LoadActivity.entries ;
+    static List<Producto> entries_search = LoadActivity.entries ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_list_layout);
+        setContentView(R.layout.family_layout);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
